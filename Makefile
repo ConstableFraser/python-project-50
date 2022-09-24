@@ -2,9 +2,6 @@
 install:
 	poetry install
 
-brain-prime:
-	poetry run gendiff
-
 build:
 	poetry build
 
@@ -13,6 +10,9 @@ publish:
 
 package-install:
 	python3 -m pip install --force-reinstall --user dist/*.whl
+
+test-coverage:
+	poetry run pytest --cov=gendiff --cov-report xml
 
 lint:
 	poetry run flake8 gendiff
