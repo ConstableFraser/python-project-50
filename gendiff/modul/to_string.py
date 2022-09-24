@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 def to_string(diff):
     var = "{\n"
     for item in diff:
