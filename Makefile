@@ -14,7 +14,7 @@ package-install:
 test:
 	poetry run pytest
 
-test-coverage:
+test-coverage-xml:
 	poetry run pytest --cov=gendiff --cov-report xml
 
 lint:
