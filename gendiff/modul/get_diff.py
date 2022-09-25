@@ -12,7 +12,7 @@ OK = ' '
 def get_diff(file1, file2):
     f1 = os.path.isfile(file1)
     f2 = os.path.isfile(file2)
-    if (f1 is False) or (f2 is False):
+    if not f1 or not f2:
         return None
     dct1 = json.load(open(file1))
     dct2 = json.load(open(file2))
