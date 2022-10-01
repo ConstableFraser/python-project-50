@@ -12,4 +12,4 @@ def parse_args():
     parser.add_argument("second_file", type=str)
     parser.add_argument("-f", "--format", type=str, help=HELP)
     args = vars(parser.parse_args())
-    generate_diff(args['first_file'], args['second_file'])
+    return generate_diff(args['first_file'], args['second_file'])
