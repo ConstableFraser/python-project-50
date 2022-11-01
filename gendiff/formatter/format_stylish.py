@@ -43,5 +43,5 @@ def stylish(model):
     for element in lst:
         output += browse_for_branch(model[element[1]])
     output += "}\n"
-    print(output)
+    #print(output)
     return output
