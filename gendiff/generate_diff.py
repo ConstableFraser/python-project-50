@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-from gendiff.to_string import to_string
 from gendiff.get_diff import get_diff
+from gendiff.formatter.format_stylish import stylish
 
 
-def generate_diff(file1, file2):
-    diff = get_diff(file1, file2)
-    return to_string(diff) if diff is not None else None
+def generate_diff(file1, file2, formatter = stylish):
+    model = get_diff(file1, file2)
+    if not callable(formatter):
+        return None
+    return formatter(model) if model is not None else None

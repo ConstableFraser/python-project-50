@@ -21,7 +21,12 @@
     group1: {
       - baz: bas
       + baz: bars
-        foo: bar
+        foo: bar 
+      - LST: [this, is, are, list]
+      + LST: {
+            this: is,
+            are: dict
+        } 
       - nest: {
             key: value
         }

@@ -13,6 +13,7 @@
   "group1": {
     "baz": "bas",
     "foo": "bar",
+    "LST": ["this", "is", "are", "list"],
     "nest": {
       "key": "value"
     }

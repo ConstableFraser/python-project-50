@@ -18,7 +18,11 @@
   "group1": {
     "foo": "bar",
     "baz": "bars",
-    "nest": "str"
+    "nest": "str",
+    "LST": {
+      "this":"is",
+      "are":"dict"
+    }
   },
   "group3": {
     "deep": {
