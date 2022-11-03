@@ -1,16 +1,8 @@
 #!/usr/bin/env python
-from gendiff.formatter.normalizer import normalize
+from gendiff.formatter.utilities import normalize, get_sort_map
 
 INDENT = 4
 MARK_SIGN = 2  # '+' or '-' or ' ' in begine string
-
-
-def get_sort_map(branch):
-    lst = []
-    for index, element in enumerate(branch):
-        lst.append([element[0], index])
-    lst.sort()
-    return lst
 
 
 def stylish(model):
@@ -32,7 +24,7 @@ def stylish(model):
                 continue
             output += " " * (dct2["level"] * INDENT - MARK_SIGN)
             output += dct2["differ"] + " " + value[0] + ": "
-            output += normalize(value[1]) + "\n"
+            output += normalize(value[1], "stylish") + "\n"
         output += " " * branch[2]["level"] * INDENT
         output += "}\n"
         return output
@@ -43,5 +35,5 @@ def stylish(model):
     for element in lst:
         output += browse_for_branch(model[element[1]])
     output += "}\n"
-    #print(output)
+    # print(output)
     return output

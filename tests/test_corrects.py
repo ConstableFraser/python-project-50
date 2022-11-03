@@ -19,13 +19,13 @@ def correct_yaml():
 
 @pytest.fixture
 def correct_result():
-    result = "tests/fixtures/json/result.txt"
+    result = "tests/fixtures/result.txt"
     return result
 
 
 @pytest.fixture
 def correct_result_revert():
-    result_revert = "tests/fixtures/json/result_revert.txt"
+    result_revert = "tests/fixtures/result_revert.txt"
     return result_revert
 
 

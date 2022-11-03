@@ -12,7 +12,7 @@ def correct_json():
 
 @pytest.fixture
 def correct_result():
-    result = "tests/fixtures/json/result_lst.txt"
+    result = "tests/fixtures/result_lst.txt"
     return result
 
 

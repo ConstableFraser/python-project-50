@@ -9,6 +9,11 @@
 [![Tests](https://github.com/ConstableFraser/python-project-50/actions/workflows/pytest.yml/badge.svg)](https://github.com/ConstableFraser/python-project-50/actions/workflows/pytest.yml)
 
 ## ASCIINEMA RECORDS
+###STEP#3:
 [![asciicast](https://asciinema.org/a/521850.svg)](https://asciinema.org/a/521850)
+###STEP#5:
 [![asciicast](https://asciinema.org/a/525046.svg)](https://asciinema.org/a/525046)
+###STEP#6:
 [![asciicast](https://asciinema.org/a/533946.svg)](https://asciinema.org/a/533946)
+###STEP#7:
+[![asciicast](https://asciinema.org/a/534728.svg)](https://asciinema.org/a/534728)
