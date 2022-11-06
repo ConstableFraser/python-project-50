@@ -17,3 +17,5 @@
 [![asciicast](https://asciinema.org/a/533946.svg)](https://asciinema.org/a/533946)
 ### step#7:
 [![asciicast](https://asciinema.org/a/534728.svg)](https://asciinema.org/a/534728)
+### step#8:
+[![asciicast](https://asciinema.org/a/535297.svg)](https://asciinema.org/a/535297)

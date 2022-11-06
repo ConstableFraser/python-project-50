@@ -1,0 +1,120 @@
+{
+    "common": {
+        "value": {
+            "follow": {
+                "value": false,
+                "differ": "added"
+            },
+            "setting1": {
+                "value": "Value 1",
+                "differ": "matched"
+            },
+            "setting2": {
+                "value": 200,
+                "differ": "removed"
+            },
+            "setting3": {
+                "value": null,
+                "old_value": true,
+                "differ": "updated"
+            },
+            "setting4": {
+                "value": "blah blah",
+                "differ": "added"
+            },
+            "setting5": {
+                "value": {
+                    "key5": {
+                        "value": "value5",
+                        "differ": "matched"
+                    }
+                },
+                "differ": "added"
+            },
+            "setting6": {
+                "value": {
+                    "doge": {
+                        "value": {
+                            "wow": {
+                                "value": "so much",
+                                "old_value": "",
+                                "differ": "updated"
+                            }
+                        },
+                        "differ": "matched"
+                    },
+                    "key": {
+                        "value": "value",
+                        "differ": "matched"
+                    },
+                    "ops": {
+                        "value": "vops",
+                        "differ": "added"
+                    }
+                },
+                "differ": "matched"
+            }
+        },
+        "differ": "matched"
+    },
+    "group1": {
+        "value": {
+            "baz": {
+                "value": "bars",
+                "old_value": "bas",
+                "differ": "updated"
+            },
+            "foo": {
+                "value": "bar",
+                "differ": "matched"
+            },
+            "nest": {
+                "value": "str",
+                "old_value": "{'key': 'value'}",
+                "differ": "updated"
+            }
+        },
+        "differ": "matched"
+    },
+    "group2": {
+        "value": {
+            "abc": {
+                "value": 12345,
+                "differ": "matched"
+            },
+            "deep": {
+                "value": {
+                    "id": {
+                        "value": 45,
+                        "differ": "matched"
+                    }
+                },
+                "differ": "matched"
+            }
+        },
+        "differ": "removed"
+    },
+    "group3": {
+        "value": {
+            "deep": {
+                "value": {
+                    "id": {
+                        "value": {
+                            "number": {
+                                "value": 45,
+                                "differ": "matched"
+                            }
+                        },
+                        "differ": "matched"
+                    }
+                },
+                "differ": "matched"
+            },
+            "fee": {
+                "value": 100500,
+                "differ": "matched"
+            }
+        },
+        "differ": "added"
+    }
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from itertools import chain
-from gendiff.formatter.utilities import normalize, get_sort_map
+from gendiff.formatter.utilities import normalize, get_sort_map, get_index
 
 
 def chain_list(lst):
@@ -12,26 +12,9 @@ def chain_list(lst):
     return lst2
 
 
-def get_index(element, branch, count):
-    cnt = list(chain(*branch)).count(element)
-    if count > cnt or not cnt:
-        return None
-    i = 0
-    lst = []
-    for item in branch:
-        if item.count(element):
-            lst.extend([i])
-        i += 1
-
-    return lst[count - 1]
-
-
 def added(fullname, element, branch):
     lst = []
     lst = chain_list(branch)
-    cnt = list(chain(*lst)).count(element)
-    if cnt == 2:
-        return ""
     index = get_index(element, lst, 1)
     value = lst[index][1]
     output = ""
@@ -60,7 +43,7 @@ def updated(fullname, element, branch):
     return output
 
 
-def fullmatch(fullname, element, branch):
+def matched(fullname, element, branch):
     return ""
 
 
@@ -75,29 +58,32 @@ def removed_updated(fullname, element, branch):
 
 
 def plain(model):
-    differs = {
-        "-": removed_updated,
-        "+": added,
-        " ": fullmatch
+    dict_map = {
+        "removed": removed,
+        "added": added,
+        "matched": matched,
+        "modified1": updated,
+        "modified2": matched
     }
 
     def browse_for_branch(branch, name):
         output = ""
-        dct = {}
-        dct = branch[2]
-        fullname = name + "." + branch[0] if dct["level"] != 1 else branch[0]
-        output += differs[dct["differ"]](fullname, branch[0], branch)
+        meta = {}
+        meta = branch[2]
+        differ = dict_map[meta["differ"]]
+        fullname = name + "." + branch[0] if meta["level"] != 1 else branch[0]
+        output += differ(fullname, branch[0], branch)
         lst = get_sort_map(branch[3])
         for element in lst:
-            dct2 = {}
-            dct2 = branch[3][element[1]][2]
+            meta = branch[3][element[1]][2]
+            differ = dict_map[meta["differ"]]
             value = branch[3][element[1]]
-            if dct2["hasChild"] and dct2["differ"] == " ":
+            if meta["hasChild"] and meta["differ"] == "matched":
                 output += browse_for_branch(value, fullname)
                 continue
             name = fullname
             fullname += "." + value[0]
-            output += differs[dct2["differ"]](fullname, value[0], branch[3])
+            output += differ(fullname, value[0], branch[3])
             fullname = name
         return output
     lst = []

@@ -2,9 +2,11 @@
 from gendiff.model.add_meta import add_meta
 
 
-FIRST_FILE = "-"
-SECOND_FILE = "+"
-COMMON_FILE = " "
+REMOVED = "removed"
+ADDED = "added"
+MATCHED = "matched"
+MODIFIED1 = "modified1"
+MODIFIED2 = "modified2"
 INDENT = 4
 
 
@@ -19,36 +21,43 @@ def get_diff_type_diff(dct, k, diff, level):
     return dif
 
 
-def get_diff_keyses(dct1, dct2, level):
-    dct = {}
+def get_diff_keyses(dct_src1, dct_src2, level):
+    dct12 = dct22 = dct_inner = {}
     diff = []
-    keyses2 = set(dct1.keys()) - set(dct2.keys())
-    if len(keyses2):
-        [dct.update({item: dct1[item]}) for item in keyses2]
-        diff.extend(matches_one_file(dct, FIRST_FILE, level + 1))
-    dct = {}
-    keyses2 = set(dct2.keys()) - set(dct1.keys())
-    if len(keyses2):
-        [dct.update({item: dct2[item]}) for item in keyses2]
-        diff.extend(matches_one_file(dct, SECOND_FILE, level + 1))
-    dct = {}
-    keyses2 = set(dct1.keys()) & set(dct2.keys())
-    if len(keyses2):
-        [dct.update({item: dct2[item]}) for item in keyses2]
-        diff.extend(matches_two_files(dct, dct1, dct2, level + 1))
+
+    def get_keyses(dct1, dct2):
+        dct12 = list(set(dct1.keys()) - set(dct2.keys()))
+        dct21 = list(set(dct2.keys()) - set(dct1.keys()))
+        dct = list(set(dct1.keys()) & set(dct2.keys()))
+        return dct12, dct21, dct
+
+    def get_dict(dct1, dct2, dct):
+        dct12 = {}
+        dct22 = {}
+        dct_inner = {}
+        [dct12.update({item: dct_src1[item]}) for item in dct1]
+        [dct22.update({item: dct_src2[item]}) for item in dct2]
+        [dct_inner.update({item: dct_src2[item]}) for item in dct]
+        return dct12, dct22, dct_inner
+
+    k1, k2, k3 = get_keyses(dct_src1, dct_src2)
+    dct12, dct22, dct_inner = get_dict(k1, k2, k3)
+    diff.extend(matches_one_file(dct12, REMOVED, level + 1))
+    diff.extend(matches_one_file(dct22, ADDED, level + 1))
+    diff.extend(matches_two_files(dct_inner, dct_src1, dct_src2, level + 1))
     return diff
 
 
 def matches_one_file(obj, differ, level):
     model = []
     if isinstance(obj, dict) is False:
-        model.append(add_meta(obj, None, COMMON_FILE, level))
+        model.append(add_meta(obj, None, MATCHED, level))
         return model
     for k, v in obj.items():
         dif1 = []
         dif1.extend(add_meta(k, v, differ, level))
         if hasattr(v, "__delitem__"):
-            dif1.append(matches_one_file(v, COMMON_FILE, level + 1))
+            dif1.append(matches_one_file(v, MATCHED, level + 1))
         model.append(dif1)
     return model
 
@@ -66,17 +75,17 @@ def matches_two_files(dct, dict1, dict2, level):
         if (isList1 and isList2) or (not hasChild1 and not hasChild2):
             # если элементы - это списки, ИЛИ у значений нет детей
             if dict1[k] != dict2[k]:
-                dif1.extend(add_meta(k, dict1[k], FIRST_FILE, level))
-                dif2.extend(add_meta(k, dict2[k], SECOND_FILE, level))
+                dif1.extend(add_meta(k, dict1[k], MODIFIED1, level))
+                dif2.extend(add_meta(k, dict2[k], MODIFIED2, level))
             else:
-                dif1.extend(add_meta(k, dict1[k], COMMON_FILE, level))
+                dif1.extend(add_meta(k, dict1[k], MATCHED, level))
         elif (dict1[k].__class__ != dict2[k].__class__):
             # тип значений разный. Проверяем, есть ли потомки и проходим по ним
-            dif1.extend(get_diff_type_diff(dict1, k, FIRST_FILE, level))
-            dif2.extend(get_diff_type_diff(dict2, k, SECOND_FILE, level))
+            dif1.extend(get_diff_type_diff(dict1, k, MODIFIED1, level))
+            dif2.extend(get_diff_type_diff(dict2, k, MODIFIED2, level))
         elif hasChild1 and hasChild2:
             # значения имеют дочерние элементы. Перебираем все значения
-            dif1.extend(add_meta(k, dict1[k], COMMON_FILE, level))
+            dif1.extend(add_meta(k, dict1[k], MATCHED, level))
             dif1.extend([get_diff_keyses(dict1[k], dict2[k], level)])
         model.append(dif1)  # головной элемент
         model.append(dif2) if len(dif2) else None
