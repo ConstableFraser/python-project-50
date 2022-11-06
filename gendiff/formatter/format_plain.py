@@ -38,8 +38,7 @@ def updated(fullname, element, branch):
     value_from = lst[get_index(element, branch, 1)][1]
     output += " From " + normalize(value_from, "plain")
     value_to = lst[get_index(element, branch, 2)][1]
-    output += " to " + normalize(value_to, "plain")
-    output += "\n"
+    output += " to " + normalize(value_to, "plain") + "\n"
     return output
 
 
@@ -74,7 +73,7 @@ def plain(model):
         fullname = name + "." + branch[0] if meta["level"] != 1 else branch[0]
         output += differ(fullname, branch[0], branch)
         lst = get_sort_map(branch[3])
-        for element in lst:
+        for index, element in enumerate(lst):
             meta = branch[3][element[1]][2]
             differ = dict_map[meta["differ"]]
             value = branch[3][element[1]]
@@ -89,6 +88,6 @@ def plain(model):
     lst = []
     lst = get_sort_map(model)
     output = ""
-    for element in lst:
+    for index, element in enumerate(lst):
         output += browse_for_branch(model[element[1]], element[0])
-    return output
+    return output[0:len(output) - 1]

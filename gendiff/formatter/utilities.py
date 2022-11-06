@@ -15,6 +15,8 @@ def normalize(value, style):
     value = str(value)
     if list(dct.keys()).count(value):
         value = dct[value]
+    elif value.isdigit():
+        return value
     else:
         value = type[style] + value + type[style]
     return value

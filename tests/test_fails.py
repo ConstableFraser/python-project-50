@@ -29,4 +29,4 @@ def test_fail_format(correct_json,correct_result):
     f = open(correct_result)
     result = f.readlines()
     f.close
-    assert "".join(result) != generate_diff(filename1, filename2, "json")
+    assert "".join(result) != generate_diff(filename1, filename2, "invalid_format")
