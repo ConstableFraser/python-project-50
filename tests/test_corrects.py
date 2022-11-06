@@ -1,5 +1,4 @@
 import pytest
-import json
 from gendiff.generate_diff import generate_diff
 
 
@@ -29,7 +28,7 @@ def correct_result_revert():
     return result_revert
 
 
-def test_diff_json(correct_json,correct_result):
+def test_diff_json(correct_json, correct_result):
     filename1, filename2 = correct_json
     f = open(correct_result)
     result = f.readlines()
@@ -37,7 +36,7 @@ def test_diff_json(correct_json,correct_result):
     assert "".join(result) == generate_diff(filename1, filename2)
 
 
-def test_diff_yaml(correct_yaml,correct_result):
+def test_diff_yaml(correct_yaml, correct_result):
     filename1, filename2 = correct_yaml
     f = open(correct_result)
     result = f.readlines()
@@ -45,7 +44,7 @@ def test_diff_yaml(correct_yaml,correct_result):
     assert "".join(result) == generate_diff(filename1, filename2)
 
 
-def test_diff_json_revert(correct_json,correct_result_revert):
+def test_diff_json_revert(correct_json, correct_result_revert):
     filename1, filename2 = correct_json
     f = open(correct_result_revert)
     result = f.readlines()
@@ -53,7 +52,7 @@ def test_diff_json_revert(correct_json,correct_result_revert):
     assert "".join(result) == generate_diff(filename2, filename1)
 
 
-def test_diff_yaml_revert(correct_yaml,correct_result_revert):
+def test_diff_yaml_revert(correct_yaml, correct_result_revert):
     filename1, filename2 = correct_yaml
     f = open(correct_result_revert)
     result = f.readlines()

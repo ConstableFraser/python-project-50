@@ -1,5 +1,4 @@
 import pytest
-import json
 from gendiff.generate_diff import generate_diff
 
 
@@ -30,7 +29,7 @@ def test_diff_plain(correct_json, correct_result):
     assert "".join(result) == generate_diff(filename1, filename2, "plain")
 
 
-def test_diff_json_revert(correct_json,correct_result_revert):
+def test_diff_json_revert(correct_json, correct_result_revert):
     filename1, filename2 = correct_json
     f = open(correct_result_revert)
     result = f.readlines()
