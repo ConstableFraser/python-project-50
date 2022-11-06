@@ -1,5 +1,6 @@
 import argparse
 from gendiff.generate_diff import generate_diff
+import typing
 
 DESCRIPTION = "Compares two configuration files and shows a difference."
 HELP = "set format of output"
