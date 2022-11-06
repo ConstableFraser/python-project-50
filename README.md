@@ -1,5 +1,27 @@
 ## DESCRIPTION
+project name: "Difference calculator"
+the main purpose: find difference between 2 files (json/yaml format)
+3 project objectives: (1) parse 2 files (2) compare and calculate diff (3) display diff in 3 formats: 'stylish', 'plain' and 'json'
+
+```
+*additional info*
+the data model is built using lists according following mask: **[key, value, {'isDict', 'isList', 'hasChild', 'differ', 'level'}, [childs]]**
+Tree part example:
+`['group2', {'abc': 12345, 'deep': {'id': 45}}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': '-', 'level': 1}, [['abc', 12345, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 2}], ['deep', {'id': 45}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': ' ', 'level': 2}, [['id', 45, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 3}]]]]]`
+```
+
 ## HOW TO INSTALL
+To install the program, enter the command:
+
+```
+make package-install
+```
+
+or another command:
+
+```
+python3 -m pip install --force-reinstall --user dist/*.whl
+```
 
 ## Hexlet tests, linter status, code climate and test coverage:
 [![Actions Status](https://github.com/ConstableFraser/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/ConstableFraser/python-project-50/actions)
@@ -9,13 +31,13 @@
 [![Tests](https://github.com/ConstableFraser/python-project-50/actions/workflows/pytest.yml/badge.svg)](https://github.com/ConstableFraser/python-project-50/actions/workflows/pytest.yml)
 
 ## ASCIINEMA RECORDS
-### step#3:
+### step#3 (calculate diff in flat files):
 [![asciicast](https://asciinema.org/a/521850.svg)](https://asciinema.org/a/521850)
-### step#5:
+### step#5 (added files YAML format):
 [![asciicast](https://asciinema.org/a/525046.svg)](https://asciinema.org/a/525046)
-### step#6:
+### step#6 (calculate diff in layered files structure and added stylish display format):
 [![asciicast](https://asciinema.org/a/533946.svg)](https://asciinema.org/a/533946)
-### step#7:
+### step#7 (added plain display format):
 [![asciicast](https://asciinema.org/a/534728.svg)](https://asciinema.org/a/534728)
-### step#8:
+### step#8 (added json display format):
 [![asciicast](https://asciinema.org/a/535297.svg)](https://asciinema.org/a/535297)
