@@ -17,7 +17,3 @@ def generate_diff(file1, file2, format_name="stylish"):
         return None
     model = get_diff(file1, file2)
     return dct[format_name](model) if model is not None else None
-
-
-if __name__ == "__main__":
-    pass
