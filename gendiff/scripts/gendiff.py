@@ -4,7 +4,8 @@ from gendiff.generate_diff import generate_diff
 
 def main():
     args = parse_args()
-    return generate_diff(args["frst_file"], args["scnd_file"], args["format"])
+    diff = generate_diff(args["frst_file"], args["scnd_file"], args["format"])
+    print(diff)
 
 
 if __name__ == "__main__":
