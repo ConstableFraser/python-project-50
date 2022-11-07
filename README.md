@@ -1,28 +1,32 @@
 ## DESCRIPTION
 project name: "Difference calculator"
-the main purpose: find difference between 2 files (json/yaml format)
-3 project objectives: (1) parse 2 files (2) compare and calculate diff (3) display diff in 3 formats: 'stylish', 'plain' and 'json'
 
-*additional info*
+the main purpose: find difference between 2 files (json/yaml format)
+
+3 project objectives:
+1. parse 2 files
+2. compare and calculate diff
+3. display diff in 3 formats: 'stylish', 'plain' and 'json'
+
+**additional info**
 the data model used is based on lists. With following mask:
-__[key, value, {'isDict', 'isList', 'hasChild', 'differ', 'level'}, [childs]]__
+
+__[key, value, dict metainfo, list childs]__
 
 Tree part example:
 _['group2', {'abc': 12345, 'deep': {'id': 45}}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': '-', 'level': 1}, [['abc', 12345, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 2}], ['deep', {'id': 45}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': ' ', 'level': 2}, [['id', 45, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 3}]]]]]_
 
 
-## HOW TO INSTALL
+## HOW TO INSTALL AND USE
 To install the program, enter the command:
 
 ```
-make package-install
+pip install gendiff
 ```
 
-or another command:
+For help: `gendiff -h`
 
-```
-python3 -m pip install --force-reinstall --user dist/*.whl
-```
+usage: `gendiff [-h] [-f FORMAT] frst_file scnd_file`
 
 ## Hexlet tests, linter status, code climate and test coverage:
 [![Actions Status](https://github.com/ConstableFraser/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/ConstableFraser/python-project-50/actions)
