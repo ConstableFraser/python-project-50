@@ -6,7 +6,7 @@ the main purpose: find difference between 2 files (json/yaml format)
 3 project objectives:
 1. parse 2 files
 2. compare and calculate diff
-3. display diff in 3 formats: 'stylish', 'plain' and 'json'
+3. display diff in 3 formats: "stylish", "plain" and "json"
 
 **additional info**
 the data model used is based on lists. With following mask:
