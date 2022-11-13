@@ -1,7 +1,7 @@
 from gendiff.formatter.utilities import get_sort_map, get_index
 
 INDENT = 4
-DELTA = "    "
+VALUE_INDENT = "    "
 
 
 def convert(value):
@@ -19,24 +19,23 @@ def convert(value):
 def add_value(value, meta, branch):
     output = ""
     indent = meta["level"] * INDENT
-    delta = DELTA * (meta["level"] - 1)
+    delta = VALUE_INDENT * (meta["level"] - 1)
     output += " " * indent + delta
-    delta = DELTA * meta["level"]
+    delta = VALUE_INDENT * meta["level"]
     indent = meta["level"] * INDENT
-    output += '"' + value[0] + '": {\n'
-    output += " " * indent + delta + '"value":'
+    full_indent = " " * indent + delta
+    output += '"' + value[0] + '": {\n' + full_indent + '"value":'
     output += " " + convert(value[1]) + ",\n"
     if meta["differ"] == "modified2":
         index = get_index(value[0], branch, 1)
-        output += " " * indent + delta + '"old_value":'
+        output += full_indent + '"old_value":'
         output += " " + convert(branch[index][1]) + ",\n"
-        output += " " * indent + delta
-        output += '"differ": ' + '"updated"\n'
+        output += full_indent + '"differ": ' + '"updated"\n'
     else:
-        output += " " * indent + delta
-        output += '"differ": ' + '"' + str(meta["differ"]) + '"\n'
-    delta = DELTA * (meta["level"] - 1)
-    output += " " * indent + delta + "}"
+        output += full_indent + '"differ": "' + str(meta["differ"]) + '"\n'
+    delta = VALUE_INDENT * (meta["level"] - 1)
+    full_indent = " " * indent + delta
+    output += full_indent + "}"
     return output
 
 
@@ -46,9 +45,9 @@ def browse_for_branch(branch):
     meta = branch[2]
     indent = meta["level"] * INDENT
     delta = " " * (meta["level"] - 1) * INDENT
-    output += " " * indent
-    output += delta + '"' + branch[0] + '": {\n'
-    output += " " * indent + delta + DELTA + '"value": {\n'
+    full_indent = " " * indent + delta
+    output += " " * indent + delta + '"' + branch[0] + '": {\n'
+    output += full_indent + VALUE_INDENT + '"value": {\n'
     lst = get_sort_map(branch[3])
     for index, element in enumerate(lst):
         meta2 = branch[3][element[1]][2]
@@ -64,11 +63,12 @@ def browse_for_branch(branch):
         output += add_value(value, meta2, branch[3])
         output += "\n" if index + 1 == len(lst) else ""
     delta = " " * meta["level"] * INDENT
-    output += " " * indent + delta + "},\n"
-    output += " " * indent + delta
+    full_indent = " " * indent + delta
+    output += full_indent + "},\n" + full_indent
     output += '"differ": ' + '"' + str(meta["differ"]) + '"\n'
     delta = " " * (meta["level"] - 1) * INDENT
-    output += " " * indent + delta + "}"
+    full_indent = " " * indent + delta
+    output += full_indent + "}"
     return output
 
 
