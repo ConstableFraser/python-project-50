@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from gendiff.model.add_meta import add_meta
+from gendiff.model.meta import add_meta
 
 
 REMOVED = "removed"
@@ -7,7 +7,6 @@ ADDED = "added"
 MATCHED = "matched"
 MODIFIED1 = "modified1"
 MODIFIED2 = "modified2"
-INDENT = 4
 
 
 def get_diff_type_diff(dct, k, diff, level):
