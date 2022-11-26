@@ -26,13 +26,13 @@ def add_value(value, meta, branch):
     full_indent = " " * indent + delta
     output += '"' + value[0] + '": {\n' + full_indent + '"value":'
     output += " " + convert(value[1]) + ",\n"
-    if meta["differ"] == "modified2":
+    if meta["type"] == "modified2":
         index = get_index(value[0], branch, 1)
         output += full_indent + '"old_value":'
         output += " " + convert(branch[index][1]) + ",\n"
-        output += full_indent + '"differ": ' + '"updated"\n'
+        output += full_indent + '"type": ' + '"updated"\n'
     else:
-        output += full_indent + '"differ": "' + str(meta["differ"]) + '"\n'
+        output += full_indent + '"type": "' + str(meta["type"]) + '"\n'
     delta = VALUE_INDENT * (meta["level"] - 1)
     full_indent = " " * indent + delta
     output += full_indent + "}"
@@ -52,11 +52,11 @@ def browse_for_branch(branch):
     for index, element in enumerate(lst):
         meta2 = branch[3][element[1]][2]
         value = branch[3][element[1]]
-        if index and meta2["differ"] != "modified2":
+        if index and meta2["type"] != "modified2":
             output += ",\n"
-        if meta2["differ"] == "modified1":
+        if meta2["type"] == "modified1":
             continue
-        if meta2["hasChild"] and meta2["differ"] != "modified2":
+        if meta2["hasChild"] and meta2["type"] != "modified2":
             output += browse_for_branch(value)
             output += "\n" if index + 1 == len(lst) else ""
             continue
@@ -65,7 +65,7 @@ def browse_for_branch(branch):
     delta = " " * meta["level"] * INDENT
     full_indent = " " * indent + delta
     output += full_indent + "},\n" + full_indent
-    output += '"differ": ' + '"' + str(meta["differ"]) + '"\n'
+    output += '"type": ' + '"' + str(meta["type"]) + '"\n'
     delta = " " * (meta["level"] - 1) * INDENT
     full_indent = " " * indent + delta
     output += full_indent + "}"

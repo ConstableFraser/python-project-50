@@ -60,34 +60,35 @@ def plain(model):
     dict_map = {
         "removed": removed,
         "added": added,
-        "matched": matched,
+        "unchanged": matched,
         "modified1": updated,
-        "modified2": matched
+        "modified2": matched,
+        "nested": matched
     }
 
     def browse_for_branch(branch, name):
         output = ""
         meta = {}
         meta = branch[2]
-        differ = dict_map[meta["differ"]]
+        type = dict_map[meta["type"]]
         fullname = name + "." + branch[0] if meta["level"] != 1 else branch[0]
-        output += differ(fullname, branch[0], branch)
+        output += type(fullname, branch[0], branch)
         lst = get_sort_map(branch[3])
-        for index, element in enumerate(lst):
+        for element in lst:
             meta = branch[3][element[1]][2]
-            differ = dict_map[meta["differ"]]
+            type = dict_map[meta["type"]]
             value = branch[3][element[1]]
-            if meta["hasChild"] and meta["differ"] == "matched":
+            if meta["hasChild"] and (meta["type"] in ["unchanged", "nested"]):
                 output += browse_for_branch(value, fullname)
                 continue
             name = fullname
             fullname += "." + value[0]
-            output += differ(fullname, value[0], branch[3])
+            output += type(fullname, value[0], branch[3])
             fullname = name
         return output
     lst = []
     lst = get_sort_map(model)
     output = ""
-    for index, element in enumerate(lst):
+    for element in lst:
         output += browse_for_branch(model[element[1]], element[0])
     return output[0:len(output) - 1]

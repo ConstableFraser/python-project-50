@@ -4,9 +4,10 @@ from gendiff.model.meta import add_meta
 
 REMOVED = "removed"
 ADDED = "added"
-MATCHED = "matched"
+MATCHED = "unchanged"
 MODIFIED1 = "modified1"
 MODIFIED2 = "modified2"
+NESTED = "nested"
 
 
 def get_diff_type_diff(dct, k, diff, level):
@@ -47,14 +48,14 @@ def get_diff_keyses(dct_src1, dct_src2, level):
     return diff
 
 
-def matches_one_file(obj, differ, level):
+def matches_one_file(obj, type, level):
     model = []
     if isinstance(obj, dict) is False:
         model.append(add_meta(obj, None, MATCHED, level))
         return model
     for k, v in obj.items():
         dif1 = []
-        dif1.extend(add_meta(k, v, differ, level))
+        dif1.extend(add_meta(k, v, type, level))
         if hasattr(v, "__delitem__"):
             dif1.append(matches_one_file(v, MATCHED, level + 1))
         model.append(dif1)
@@ -84,7 +85,7 @@ def matches_two_files(dct, dict1, dict2, level):
             dif2.extend(get_diff_type_diff(dict2, k, MODIFIED2, level))
         elif hasChild1 and hasChild2:
             # значения имеют дочерние элементы. Перебираем все значения
-            dif1.extend(add_meta(k, dict1[k], MATCHED, level))
+            dif1.extend(add_meta(k, dict1[k], NESTED, level))
             dif1.extend([get_diff_keyses(dict1[k], dict2[k], level)])
         model.append(dif1)  # головной элемент
         model.append(dif2) if len(dif2) else None
@@ -94,4 +95,7 @@ def matches_two_files(dct, dict1, dict2, level):
 def model_building(dict1, dict2):
     model = []
     model.extend(get_diff_keyses(dict1, dict2, 0))
+    # f = open("MODEL.TXT", "w")
+    # f.write(str(model))
+    # f.close()
     return model

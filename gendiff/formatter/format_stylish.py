@@ -9,17 +9,18 @@ def browse_for_branch(branch):
     dict_map = {
         "removed": "-",
         "added": "+",
-        "matched": " ",
+        "unchanged": " ",
         "modified1": "-",
-        "modified2": "+"
+        "modified2": "+",
+        "nested": " "
     }
     output = ""
     sign = ""
     meta = {}
     meta = branch[2]
     level = meta["level"]
-    differ = meta["differ"]
-    sign = dict_map[differ]
+    type = meta["type"]
+    sign = dict_map[type]
     indent = level * INDENT - MARK_SIGN
     output += " " * indent
     output += sign + " " + branch[0] + ": " + "{\n"
@@ -27,9 +28,9 @@ def browse_for_branch(branch):
     for element in lst:
         meta = branch[3][element[1]][2]
         level = meta["level"]
-        differ = meta["differ"]
+        type = meta["type"]
         value = branch[3][element[1]]
-        sign = dict_map[differ]
+        sign = dict_map[type]
         indent = level * INDENT - MARK_SIGN
         if meta["hasChild"]:
             output += browse_for_branch(value)

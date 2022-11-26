@@ -3,33 +3,33 @@
         "value": {
             "follow": {
                 "value": false,
-                "differ": "added"
+                "type": "added"
             },
             "setting1": {
                 "value": "Value 1",
-                "differ": "matched"
+                "type": "unchanged"
             },
             "setting2": {
                 "value": 200,
-                "differ": "removed"
+                "type": "removed"
             },
             "setting3": {
                 "value": null,
                 "old_value": true,
-                "differ": "updated"
+                "type": "updated"
             },
             "setting4": {
                 "value": "blah blah",
-                "differ": "added"
+                "type": "added"
             },
             "setting5": {
                 "value": {
                     "key5": {
                         "value": "value5",
-                        "differ": "matched"
+                        "type": "unchanged"
                     }
                 },
-                "differ": "added"
+                "type": "added"
             },
             "setting6": {
                 "value": {
@@ -38,61 +38,61 @@
                             "wow": {
                                 "value": "so much",
                                 "old_value": "",
-                                "differ": "updated"
+                                "type": "updated"
                             }
                         },
-                        "differ": "matched"
+                        "type": "nested"
                     },
                     "key": {
                         "value": "value",
-                        "differ": "matched"
+                        "type": "unchanged"
                     },
                     "ops": {
                         "value": "vops",
-                        "differ": "added"
+                        "type": "added"
                     }
                 },
-                "differ": "matched"
+                "type": "nested"
             }
         },
-        "differ": "matched"
+        "type": "nested"
     },
     "group1": {
         "value": {
             "baz": {
                 "value": "bars",
                 "old_value": "bas",
-                "differ": "updated"
+                "type": "updated"
             },
             "foo": {
                 "value": "bar",
-                "differ": "matched"
+                "type": "unchanged"
             },
             "nest": {
                 "value": "str",
                 "old_value": "{'key': 'value'}",
-                "differ": "updated"
+                "type": "updated"
             }
         },
-        "differ": "matched"
+        "type": "nested"
     },
     "group2": {
         "value": {
             "abc": {
                 "value": 12345,
-                "differ": "matched"
+                "type": "unchanged"
             },
             "deep": {
                 "value": {
                     "id": {
                         "value": 45,
-                        "differ": "matched"
+                        "type": "unchanged"
                     }
                 },
-                "differ": "matched"
+                "type": "unchanged"
             }
         },
-        "differ": "removed"
+        "type": "removed"
     },
     "group3": {
         "value": {
@@ -102,19 +102,19 @@
                         "value": {
                             "number": {
                                 "value": 45,
-                                "differ": "matched"
+                                "type": "unchanged"
                             }
                         },
-                        "differ": "matched"
+                        "type": "unchanged"
                     }
                 },
-                "differ": "matched"
+                "type": "unchanged"
             },
             "fee": {
                 "value": 100500,
-                "differ": "matched"
+                "type": "unchanged"
             }
         },
-        "differ": "added"
+        "type": "added"
     }
 }
