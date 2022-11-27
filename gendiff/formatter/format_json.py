@@ -26,7 +26,7 @@ def add_value(value, meta, branch):
     full_indent = " " * indent + delta
     output += '"' + value[0] + '": {\n' + full_indent + '"value":'
     output += " " + convert(value[1]) + ",\n"
-    if meta["type"] == "modified2":
+    if meta["type"] == "changed2":
         index = get_index(value[0], branch, 1)
         output += full_indent + '"old_value":'
         output += " " + convert(branch[index][1]) + ",\n"
@@ -57,10 +57,10 @@ def browse_for_branch(branch):
     for index, element in enumerate(lst):
         meta2 = branch[3][element[1]][2]
         value = branch[3][element[1]]
-        isParent = all([meta2["hasChild"], meta2["type"] != "modified2"])
-        notLast = all([index, meta2["type"] != "modified2"])
+        isParent = all([meta2["hasChild"], meta2["type"] != "changed2"])
+        notLast = all([index, meta2["type"] != "changed2"])
         output += ",\n" if notLast else ""
-        if meta2["type"] == "modified1":
+        if meta2["type"] == "changed1":
             continue
         if isParent:
             output += browse_for_branch(value)

@@ -10,8 +10,8 @@ def browse_for_branch(branch):
         "removed": "-",
         "added": "+",
         "unchanged": " ",
-        "modified1": "-",
-        "modified2": "+",
+        "changed1": "-",
+        "changed2": "+",
         "nested": " "
     }
     output = ""

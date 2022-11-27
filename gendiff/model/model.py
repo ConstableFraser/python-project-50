@@ -5,8 +5,8 @@ from gendiff.model.meta import add_meta
 REMOVED = "removed"
 ADDED = "added"
 MATCHED = "unchanged"
-MODIFIED1 = "modified1"
-MODIFIED2 = "modified2"
+CHANGED1 = "changed1"
+CHANGED2 = "changed2"
 NESTED = "nested"
 
 
@@ -75,14 +75,14 @@ def matches_two_files(dct, dict1, dict2, level):
         if (isList1 and isList2) or (not hasChild1 and not hasChild2):
             # если элементы - это списки, ИЛИ у значений нет детей
             if dict1[k] != dict2[k]:
-                dif1.extend(add_meta(k, dict1[k], MODIFIED1, level))
-                dif2.extend(add_meta(k, dict2[k], MODIFIED2, level))
+                dif1.extend(add_meta(k, dict1[k], CHANGED1, level))
+                dif2.extend(add_meta(k, dict2[k], CHANGED2, level))
             else:
                 dif1.extend(add_meta(k, dict1[k], MATCHED, level))
         elif (dict1[k].__class__ != dict2[k].__class__):
             # тип значений разный. Проверяем, есть ли потомки и проходим по ним
-            dif1.extend(get_diff_type_diff(dict1, k, MODIFIED1, level))
-            dif2.extend(get_diff_type_diff(dict2, k, MODIFIED2, level))
+            dif1.extend(get_diff_type_diff(dict1, k, CHANGED1, level))
+            dif2.extend(get_diff_type_diff(dict2, k, CHANGED2, level))
         elif hasChild1 and hasChild2:
             # значения имеют дочерние элементы. Перебираем все значения
             dif1.extend(add_meta(k, dict1[k], NESTED, level))

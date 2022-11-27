@@ -16,8 +16,8 @@ def browse_for_branch(branch, name):
         "removed": removed,
         "added": added,
         "unchanged": matched,
-        "modified1": updated,
-        "modified2": matched,
+        "changed1": updated,
+        "changed2": matched,
         "nested": matched
     }
     output = ""
