@@ -89,6 +89,8 @@ def plain(model):
     lst = []
     lst = get_sort_map(model)
     output = ""
-    for element in lst:
-        output += browse_for_branch(model[element[1]], element[0])
-    return output[0:len(output) - 1]
+    output = [browse_for_branch(model[e[1]], e[0])for e in lst]
+    return "".join(output).strip("\n")
+    # for element in lst:
+    # output += browse_for_branch(model[element[1]], element[0])
+    # return output[0:len(output) - 1]
