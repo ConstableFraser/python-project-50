@@ -39,36 +39,40 @@ def add_value(value, meta, branch):
     return output
 
 
+def init_indent(meta, level):
+    indent = meta["level"] * INDENT
+    delta = " " * (meta["level"] - level) * INDENT
+    full_indent = " " * indent + delta
+    return indent, delta, full_indent
+
+
 def browse_for_branch(branch):
     output = ""
     meta = {}
     meta = branch[2]
-    indent = meta["level"] * INDENT
-    delta = " " * (meta["level"] - 1) * INDENT
-    full_indent = " " * indent + delta
-    output += " " * indent + delta + '"' + branch[0] + '": {\n'
-    output += full_indent + VALUE_INDENT + '"value": {\n'
+    indent, delta, full_indent = init_indent(meta, level=1)
+    output += f'{" " * indent}{delta}"{branch[0]}": \u007B\n'
+    output += f'{full_indent}{VALUE_INDENT}"value": \u007B\n'
     lst = get_sort_map(branch[3])
     for index, element in enumerate(lst):
         meta2 = branch[3][element[1]][2]
         value = branch[3][element[1]]
-        if index and meta2["type"] != "modified2":
-            output += ",\n"
+        isParent = all([meta2["hasChild"], meta2["type"] != "modified2"])
+        notLast = all([index, meta2["type"] != "modified2"])
+        output += ",\n" if notLast else ""
         if meta2["type"] == "modified1":
             continue
-        if meta2["hasChild"] and meta2["type"] != "modified2":
+        if isParent:
             output += browse_for_branch(value)
-            output += "\n" if index + 1 == len(lst) else ""
+            output += "\n" if index == len(lst) - 1 else ""
             continue
         output += add_value(value, meta2, branch[3])
-        output += "\n" if index + 1 == len(lst) else ""
-    delta = " " * meta["level"] * INDENT
-    full_indent = " " * indent + delta
-    output += full_indent + "},\n" + full_indent
-    output += '"type": ' + '"' + str(meta["type"]) + '"\n'
-    delta = " " * (meta["level"] - 1) * INDENT
-    full_indent = " " * indent + delta
-    output += full_indent + "}"
+        output += "\n" if index == len(lst) - 1 else ""
+    _, delta, full_indent = init_indent(meta, 0)
+    output += f"{full_indent}\u007D,\n{full_indent}"
+    output += f'"type": "{str(meta["type"])}"\n'
+    _, delta, full_indent = init_indent(meta, level=1)
+    output += f"{full_indent}\u007D"
     return output
 
 
