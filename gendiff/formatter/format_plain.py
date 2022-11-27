@@ -3,6 +3,45 @@ from itertools import chain
 from gendiff.formatter.utilities import normalize, get_sort_map, get_index
 
 
+def plain(model):
+    lst = []
+    lst = get_sort_map(model)
+    output = ""
+    output = [browse_for_branch(model[e[1]], e[0]) for e in lst]
+    return "".join(output).strip("\n")
+
+
+def browse_for_branch(branch, name):
+    dict_map = {
+        "removed": removed,
+        "added": added,
+        "unchanged": matched,
+        "modified1": updated,
+        "modified2": matched,
+        "nested": matched
+    }
+    output = ""
+    meta = {}
+    meta = branch[2]
+    type = dict_map[meta["type"]]
+    key = branch[0]
+    fullname = name + "." + key if meta["level"] != 1 else key
+    output += type(fullname, key, branch)
+    lst = get_sort_map(branch[3])
+    for element in lst:
+        meta = branch[3][element[1]][2]
+        type = dict_map[meta["type"]]
+        value = branch[3][element[1]]
+        if meta["hasChild"] and (meta["type"] in ["unchanged", "nested"]):
+            output += browse_for_branch(value, fullname)
+        else:
+            name = fullname
+            fullname += "." + value[0]
+            output += type(fullname, value[0], branch[3])
+            fullname = name
+    return output
+
+
 def chain_list(lst):
     if not isinstance(lst[0], list):
         return [lst]
@@ -44,52 +83,3 @@ def updated(fullname, element, branch):
 
 def matched(fullname, element, branch):
     return ""
-
-
-def removed_updated(fullname, element, branch):
-    dct = {
-        "1": removed,
-        "2": updated
-    }
-    branch = chain_list(branch)
-    index = str(list(chain(*branch)).count(element))
-    return dct[index](fullname, element, branch)
-
-
-def browse_for_branch(branch, name):
-    dict_map = {
-        "removed": removed,
-        "added": added,
-        "unchanged": matched,
-        "modified1": updated,
-        "modified2": matched,
-        "nested": matched
-    }
-
-    output = ""
-    meta = {}
-    meta = branch[2]
-    type = dict_map[meta["type"]]
-    fullname = name + "." + branch[0] if meta["level"] != 1 else branch[0]
-    output += type(fullname, branch[0], branch)
-    lst = get_sort_map(branch[3])
-    for element in lst:
-        meta = branch[3][element[1]][2]
-        type = dict_map[meta["type"]]
-        value = branch[3][element[1]]
-        if meta["hasChild"] and (meta["type"] in ["unchanged", "nested"]):
-            output += browse_for_branch(value, fullname)
-            continue
-        name = fullname
-        fullname += "." + value[0]
-        output += type(fullname, value[0], branch[3])
-        fullname = name
-    return output
-
-
-def plain(model):
-    lst = []
-    lst = get_sort_map(model)
-    output = ""
-    output = [browse_for_branch(model[e[1]], e[0]) for e in lst]
-    return "".join(output).strip("\n")
