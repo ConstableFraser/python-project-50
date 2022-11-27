@@ -32,13 +32,16 @@ def browse_for_branch(branch, name):
         meta = branch[3][element[1]][2]
         type = dict_map[meta["type"]]
         value = branch[3][element[1]]
-        if meta["hasChild"] and (meta["type"] in ["unchanged", "nested"]):
+        isParent = all([meta["hasChild"],
+                        meta["type"] in ["unchanged", "nested"]
+                        ])
+        if isParent:
             output += browse_for_branch(value, fullname)
-        else:
-            name = fullname
-            fullname += "." + value[0]
-            output += type(fullname, value[0], branch[3])
-            fullname = name
+            continue
+        name = fullname
+        fullname += "." + value[0]
+        output += type(fullname, value[0], branch[3])
+        fullname = name
     return output
 
 
