@@ -76,22 +76,15 @@ def add_changed(node, key, level):
     value = node[key]["value"]
     old_value = node[key]["old_value"]
 
-    if isinstance(old_value, dict):
-        output += open_tag("removed", str(key), level, True)
-        output += walk_for_dict(old_value, "unchanged", level)
-        output += close_tag(level)
-    else:
-        output += open_tag("removed", str(key), level, False)
-        output += normalize(old_value, "stylish") + "\n"
-
-    if isinstance(value, dict):
-        output += open_tag("added", str(key), level, True)
-        output += walk_for_dict(value, "unchanged", level)
-        output += close_tag(level)
-    else:
-        output += open_tag("added", str(key), level, False)
-        output += normalize(value, "stylish") + "\n"
-
+    for i, v in enumerate([old_value, value]):
+        type = "added" if i else "removed"
+        if isinstance(v, dict):
+            output += open_tag(type, str(key), level, True)
+            output += walk_for_dict(v, "unchanged", level)
+            output += close_tag(level)
+            continue
+        output += open_tag(type, str(key), level, False)
+        output += normalize(v, "stylish") + "\n"
     return output
 
 
