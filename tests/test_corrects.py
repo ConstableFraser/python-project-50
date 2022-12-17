@@ -76,8 +76,10 @@ def test_diff_json_open(correct_json):
     f = open("tests/fixtures/file_to_load.json", "w")
     f.write(generate_diff(filename1, filename2, "json"))
     f.close()
-    f = open("tests/fixtures/file_to_load.json")
-    dct = {}
-    dct = json.load(f)
-    f.close()
-    assert dct['group2']['value']['abc']['value'] == 12345
+    dct = ""
+    model = ""
+    with open("tests/fixtures/file_to_load.json") as f1:
+        dct = json.loads(f1.read())
+    with open("tests/fixtures/model.json") as f2:
+        model = json.loads(f2.read())
+    assert dct == model
