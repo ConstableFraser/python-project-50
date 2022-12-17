@@ -61,8 +61,8 @@ def test_fails(file1, file2, result, format):
     result = get_content(result)
     try:
         output = generate_diff(file1, file2, format)
-    except FileNotFoundError: 
-        assert None == output
+    except FileNotFoundError:
+        assert output is None
     assert "".join(result) == output
 
 
