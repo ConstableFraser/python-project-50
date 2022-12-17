@@ -51,11 +51,6 @@ def test_corrects(file1, file2, result, format):
                   "tests/fixtures/json/json2.json",
                   "tests/fixtures/result_lst.txt",
                   "UNCORRECT_FORMAT",
-                  marks=pytest.mark.xfail),
-     pytest.param("tests/fixtures/json/json1.json",
-                  "TESTS/FAIL_FILE.JSON",
-                  "tests/fixtures/result_lst.txt",
-                  "plain",
                   marks=pytest.mark.xfail)])
 def test_fails(file1, file2, result, format):
     result = get_content(result)
@@ -64,6 +59,19 @@ def test_fails(file1, file2, result, format):
     except FileNotFoundError:
         assert output is None
     assert "".join(result) == output
+
+
+@pytest.fixture
+def uncorrect_files():
+    file1 = "tests/fixtures/json/json1.json"
+    file2 = "tests/TEST_FILENAME_FAIL.json"
+    return file1, file2
+
+
+def test_uncorrect_files(uncorrect_files):
+    filename1, filename2 = uncorrect_files
+    with pytest.raises(FileNotFoundError):
+        generate_diff(filename1, filename2, "json")
 
 
 @pytest.fixture
