@@ -1,7 +1,7 @@
 ## DESCRIPTION
 project name: "Difference calculator"
 
-the main purpose: find difference between 2 files (json/yaml format)
+the main purpose: find difference between 2 files (json/yaml format) and display in one of the formats
 
 3 project objectives:
 1. parse 2 files
@@ -9,13 +9,9 @@ the main purpose: find difference between 2 files (json/yaml format)
 3. display diff in 3 formats: "stylish", "plain" and "json"
 
 **additional info**
-the data model used is based on lists. With following mask:
 
-__[key, value, dict metainfo, list childs]__
-
-Tree part example:
-_['group2', {'abc': 12345, 'deep': {'id': 45}}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': '-', 'level': 1}, [['abc', 12345, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 2}], ['deep', {'id': 45}, {'isDict': True, 'isList': False, 'hasChild': True, 'differ': ' ', 'level': 2}, [['id', 45, {'isDict': False, 'isList': False, 'hasChild': False, 'differ': ' ', 'level': 3}]]]]]_
-
+Structural scheme
+![structural scheme](docs/images/scheme.jpg)
 
 ## HOW TO INSTALL AND USE
 To install the program, enter the command:
