@@ -54,10 +54,7 @@ def test_corrects(file1, file2, result, format):
                   marks=pytest.mark.xfail)])
 def test_fails(file1, file2, result, format):
     result = get_content(result)
-    try:
-        output = generate_diff(file1, file2, format)
-    except FileNotFoundError:
-        assert output is None
+    output = generate_diff(file1, file2, format)
     assert "".join(result) == output
 
 

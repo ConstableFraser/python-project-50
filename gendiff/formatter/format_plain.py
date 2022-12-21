@@ -2,7 +2,7 @@
 from gendiff.formatter.utilities import normalize
 
 
-def removed(tree, key, path_name):
+def add_removed(tree, key, path_name):
     output = ""
     fullpath = ""
     fullpath = (path_name + ".") if len(path_name) else ""
@@ -10,7 +10,7 @@ def removed(tree, key, path_name):
     return output
 
 
-def added(tree, key, path_name):
+def add_added(tree, key, path_name):
     output = ""
     fullpath = (path_name + ".") if len(path_name) else ""
     value = normalize(tree[key]["value"], "plain")
@@ -19,7 +19,7 @@ def added(tree, key, path_name):
     return output
 
 
-def nested(tree, key, path_name):
+def add_nested(tree, key, path_name):
     output = ""
     fullpath = (path_name + ".") if len(path_name) else ""
     keyses = list(tree[key]["value"].keys())
@@ -31,7 +31,7 @@ def nested(tree, key, path_name):
     return output
 
 
-def changed(tree, key, path_name):
+def add_changed(tree, key, path_name):
     output = ""
     value = normalize(tree[key]["value"], "plain")
     old_value = normalize(tree[key]["old_value"], "plain")
@@ -41,16 +41,16 @@ def changed(tree, key, path_name):
     return output
 
 
-def unchanged(tree, key, path_name):
+def add_unchanged(tree, key, path_name):
     return ""
 
 
 dict_func = {
-    "removed": removed,
-    "added": added,
-    "unchanged": unchanged,
-    "nested": nested,
-    "changed": changed
+    "removed": add_removed,
+    "added": add_added,
+    "unchanged": add_unchanged,
+    "nested": add_nested,
+    "changed": add_changed
 }
 
 
