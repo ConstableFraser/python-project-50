@@ -41,8 +41,12 @@ def add_changed(tree, key, path_name):
 
 
 def normalize(value, style):
-    if isinstance(value, dict) or isinstance(value, list):
+    iscomplex = any([isinstance(value, dict),
+                     isinstance(value, list)])
+
+    if iscomplex:
         return "[complex value]"
+
     dct = {
         "False": "false",
         "True": "true",
