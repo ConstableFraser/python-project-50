@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from gendiff.formatter.utilities import normalize
 
 
 def add_removed(tree, key, path_name):
@@ -41,6 +40,19 @@ def add_changed(tree, key, path_name):
     return output
 
 
+def normalize(value, style):
+    if isinstance(value, dict) or isinstance(value, list):
+        return "[complex value]"
+    dct = {
+        "False": "false",
+        "True": "true",
+        "None": "null"
+    }
+    value = str(value)
+    value = dct[value] if value in list(dct.keys()) else f"'{value}'"
+    return value
+
+
 def add_unchanged(tree, key, path_name):
     return ""
 
@@ -57,7 +69,6 @@ dict_func = {
 def plain(tree):
     keyses = []
     keyses = list(tree.keys())
-    keyses.sort()
     output = ""
     for key in keyses:
         node_type = tree[key]["type"]

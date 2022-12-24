@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from gendiff.formatter.utilities import normalize
 
 
 INDENT = 4
@@ -36,19 +35,25 @@ def walk_for_dict(value, level, flag):
         type = flag if flag else value[k]["type"]
         v = value[k] if flag else value[k]["value"]
         if type in ["added", "removed", "unchanged"]:
-            if isinstance(v, dict):
-                output.extend(open_tag(type, k, level + 1, True))
-                output.extend(walk_for_dict(v, level + 1, "unchanged"))
-                output.extend(close_tag(level + 1))
-                continue
-            output.extend(open_tag(type, k, level + 1, False))
-            output.extend(normalize(v, "stylish") + "\n")
+            output.extend(add_type(k, v, type, level))
         elif type == "nested":
             output.extend(open_tag("unchanged", str(k), level + 1, True))
             output.extend(walk_for_dict(v, level + 1, None))
             output.extend(close_tag(level + 1))
         elif type == "changed":
             output.extend(add_changed(value, k, level))
+    return output
+
+
+def add_type(k, v, type, level):
+    output = []
+    if isinstance(v, dict):
+        output.extend(open_tag(type, k, level + 1, True))
+        output.extend(walk_for_dict(v, level + 1, "unchanged"))
+        output.extend(close_tag(level + 1))
+        return output
+    output.extend(open_tag(type, k, level + 1, False))
+    output.extend(normalize(v, "stylish") + "\n")
     return output
 
 
@@ -66,6 +71,17 @@ def add_changed(value, k, level):
         output.extend(open_tag(type, str(k), level + 1, False))
         output.extend(normalize(e, "stylish") + "\n")
     return output
+
+
+def normalize(value, style):
+    dct = {
+        "False": "false",
+        "True": "true",
+        "None": "null"
+    }
+    value = str(value)
+    value = dct[value] if value in list(dct.keys()) else value
+    return value
 
 
 def stylish(tree):
