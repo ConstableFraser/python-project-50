@@ -49,7 +49,10 @@ def normalize(value, style):
         "None": "null"
     }
     value = str(value)
-    value = dct[value] if value in list(dct.keys()) else f"'{value}'"
+    if value in list(dct.keys()):
+        value = dct[value]
+    else:
+        value = value if value.isdigit() else f"'{value}'"
     return value
 
 
