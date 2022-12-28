@@ -21,10 +21,9 @@ def add_added(tree, key, path_name):
 def add_nested(tree, key, path_name):
     output = ""
     fullpath = (path_name + ".") if len(path_name) else ""
-    keyses = list(tree[key]["value"].keys())
-    keyses.sort()
+    keys = list(tree[key]["value"].keys())
     value = tree[key]["value"]
-    for k in keyses:
+    for k in keys:
         node_type = value[k]["type"]
         output += dict_func[node_type](value, k, fullpath + str(key))
     return output
@@ -74,10 +73,10 @@ dict_func = {
 
 
 def plain(tree):
-    keyses = []
-    keyses = list(tree.keys())
+    keys = []
+    keys = list(tree.keys())
     output = ""
-    for key in keyses:
+    for key in keys:
         node_type = tree[key]["type"]
         output += dict_func[node_type](tree, key, "")
     return output[1::]
